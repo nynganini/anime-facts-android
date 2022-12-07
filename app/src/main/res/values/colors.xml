@@ -7,4 +7,14 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+
+    <color name="primary_color">#FF0C1E3C</color>
+    <color name="primary_dark_color">#FF041E42</color>
+    <color name="secondary_color">#FF21355C</color>
+    <color name="accent_color">#FF3683FC</color>
+
+    <color name="immersive_sys_ui">#33000000</color>
+    <color name="nav_bar">@color/immersive_sys_ui</color>
+    <color name="black30">#4D000000</color>
 </resources>

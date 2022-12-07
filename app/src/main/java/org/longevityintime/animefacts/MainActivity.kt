@@ -10,11 +10,19 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.longevityintime.animefacts.ui.theme.AnimeFactsTheme
 
 class MainActivity : ComponentActivity() {
+
+    lateinit var auth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+
         setContent {
             AnimeFactsTheme {
                 // A surface container using the 'background' color from the theme
@@ -22,22 +30,28 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    SignIn()
                 }
             }
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        val currentUser = auth.currentUser
+        if(currentUser != null) reload()
+    }
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun SignIn() {
+    Text(text = "Hello world!")
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     AnimeFactsTheme {
-        Greeting("Android")
+        SignIn()
     }
 }

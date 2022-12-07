@@ -1,7 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="NightAdjusted.Theme.AnimeFacts" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
 
-    <style name="Theme.AnimeFacts" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">@color/purple_700</item>
+    <style name="PlatformAdjusted.Theme.AnimeFacts" parent="NightAdjusted.Theme.AnimeFacts">
+        <item name="android:statusBarColor">@color/immersive_sys_ui</item>
+        <item name="android:navigationBarColor">@color/nav_bar</item>
+    </style>
+
+    <style name="Theme.AnimeFacts" parent="PlatformAdjusted.Theme.AnimeFacts">
+        <item name="android:colorPrimary">@color/primary_color</item>
+        <item name="android:colorPrimaryDark">@color/primary_dark_color</item>
+        <item name="android:colorAccent">@color/accent_color</item>
+    </style>
+
+    <style name="Theme.AnimeFacts.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="NightAdjusted.Theme.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">true</item>
+    </style>
+
+    <style name="PlatformAdjusted.Theme.Splash" parent="Theme.SplashScreen">
+        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="27">shortEdges</item>
+    </style>
+
+    <style name="Theme.AnimeFacts.Splash" parent="PlatformAdjusted.Theme.Splash">
+        <item name="windowSplashScreenAnimatedIcon">@drawable/launch_drawable</item>
+        <item name="android:windowBackground">@drawable/launch_drawable</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="postSplashScreenTheme">@style/Theme.AnimeFacts</item>
     </style>
 </resources>
