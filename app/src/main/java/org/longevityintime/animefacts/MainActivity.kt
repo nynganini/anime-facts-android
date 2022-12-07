@@ -10,9 +10,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 import org.longevityintime.animefacts.ui.theme.AnimeFactsTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,8 +23,13 @@ class MainActivity : ComponentActivity() {
     lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
-        auth = Firebase.auth
+
+//        Firebase.initialize(this)
+//        auth = Firebase.auth
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             AnimeFactsTheme {
@@ -38,8 +46,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        val currentUser = auth.currentUser
-        if(currentUser != null) reload()
+//        val currentUser = auth.currentUser
+//        if(currentUser != null) reload()
     }
 }
 
