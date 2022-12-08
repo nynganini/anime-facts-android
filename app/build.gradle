@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlinx-serialization'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -68,6 +69,10 @@ dependencies {
 
     implementation platform("com.google.firebase:firebase-bom:$firebase_version")
     implementation "com.google.firebase:firebase-auth-ktx"
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation "com.firebaseui:firebase-ui-auth:8.0.1"
+    implementation "com.firebaseui:firebase-ui-database:8.0.1"
+    implementation "com.google.android.gms:play-services-auth:20.4.0"
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
@@ -76,7 +81,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0'
 
-    implementation "io.coil-kt:coil:2.2.2"
+    implementation "io.coil-kt:coil-compose:2.2.2"
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
