@@ -1,9 +1,10 @@
 package org.longevityintime.animefacts.model
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class AnimeFact(
-    val id: Long,
-    val fact: String
+    @SerialName("fact_id") val id: Long,
+    @SerialName("fact") val fact: String
 )
