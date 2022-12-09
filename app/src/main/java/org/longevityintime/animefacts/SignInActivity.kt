@@ -11,6 +11,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.view.WindowCompat
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -20,11 +21,9 @@ import org.longevityintime.animefacts.ui.theme.AnimeFactsTheme
 
 class SignInActivity: ComponentActivity() {
 
-    private lateinit var auth: FirebaseAuth
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        auth = Firebase.auth
+        val auth = Firebase.auth
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             AnimeFactsTheme {
@@ -32,13 +31,22 @@ class SignInActivity: ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.onBackground
                 ) {
-                    SignUp { idToken ->
-                        val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
-                        auth.signInWithCredential(firebaseCredential)
-                            .addOnCompleteListener{
-                                gotoMainActivity()
-                            }
-                    }
+                    SignUp(
+                        onIdToken = { idToken ->
+                            val firebaseCredential = GoogleAuthProvider.getCredential(idToken, null)
+                            auth.signInWithCredential(firebaseCredential)
+                                .addOnCompleteListener{
+                                    gotoMainActivity()
+                                }
+                        },
+                        onAccessToken = {
+                            val firebaseCredential = FacebookAuthProvider.getCredential(it)
+                            auth.signInWithCredential(firebaseCredential)
+                                .addOnCompleteListener{
+                                    gotoMainActivity()
+                                }
+                        }
+                    )
                 }
             }
         }

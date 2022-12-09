@@ -37,7 +37,8 @@ import kotlin.math.sign
 
 @Composable
 fun SignUp(
-    onIdToken: (String) -> Unit
+    onIdToken: (String) -> Unit,
+    onAccessToken: (String) -> Unit
 ) {
     Scaffold(
         modifier = Modifier.navigationBarsPadding(),
@@ -56,7 +57,7 @@ fun SignUp(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    FacebookSignIn(onIdToken = onIdToken)
+                    FacebookSignIn(onIdToken = onAccessToken)
                     GoogleSignIn(onIdToken = onIdToken)
                 }
                 Button(
@@ -65,7 +66,10 @@ fun SignUp(
                         .fillMaxWidth()
                         .padding(horizontal = 16.dp)
                         .padding(top = 16.dp, bottom = 32.dp),
-                    shape = MaterialTheme.shapes.large
+                    shape = MaterialTheme.shapes.large,
+                    colors = ButtonDefaults.buttonColors(
+                        backgroundColor = MaterialTheme.colors.primaryVariant
+                    )
                 ) {
                     Text(
                         text = stringResource(id = R.string.login_continue),
@@ -166,7 +170,8 @@ fun FacebookLoginScreen(
 
                 override fun onSuccess(result: LoginResult) {
                     onIdToken(result.accessToken.token)
-                    Log.i("longevityintime", "onSuccess $result")
+                    Log.i("longevityintime", "onSuccess auth ${result.authenticationToken?.token}")
+                    Log.i("longevityintime", "onSuccess access ${result.accessToken.token}")
                 }
 
             }
@@ -177,8 +182,8 @@ fun FacebookLoginScreen(
     }
     val context = LocalContext.current
     IconButton(onClick = {
-        LoginManager.getInstance().logInWithReadPermissions(context.getActivity()!!, Arrays.asList("public_profile"))
-//        LoginManager.getInstance().logIn(context as ActivityResultRegistryOwner, callbackManager, listOf("email"))
+//        LoginManager.getInstance().logInWithReadPermissions(context.getActivity()!!, listOf("public_profile"))
+        LoginManager.getInstance().logIn(context as ActivityResultRegistryOwner, callbackManager, listOf("email"))
     },
         modifier = modifier.padding(16.dp)
     ) {
