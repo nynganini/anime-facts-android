@@ -3,6 +3,7 @@ package org.longevityintime.animefacts.ui
 import android.util.Log
 import androidx.activity.result.ActivityResultRegistryOwner
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
 import androidx.compose.material.Scaffold
@@ -28,7 +29,7 @@ fun SignUp(
 
         }
     ) { paddingValues ->
-        Box(modifier = Modifier.padding(paddingValues)){
+        Box(modifier = Modifier.fillMaxSize().padding(paddingValues)){
             FacebookSignIn()
         }
     }
