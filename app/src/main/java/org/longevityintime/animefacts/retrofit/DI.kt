@@ -10,7 +10,7 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
 object DI {
-    private const val BaseUrl = "https://www.nnbelectronics.com/anime-facts/api/v1/"
+    private const val BaseUrl = "https://www.nnbelectronics.com/anime-facts/api/"
     private val contentType = "application/json".toMediaType()
     private val json = Json { ignoreUnknownKeys = true }
 

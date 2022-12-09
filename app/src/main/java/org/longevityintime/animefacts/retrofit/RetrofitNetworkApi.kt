@@ -3,15 +3,17 @@ package org.longevityintime.animefacts.retrofit
 import android.util.Log
 import org.longevityintime.animefacts.model.Anime
 import org.longevityintime.animefacts.model.AnimeFact
+import org.longevityintime.animefacts.model.AnimeFacts
 import retrofit2.HttpException
 import retrofit2.http.GET
+import retrofit2.http.Path
 import java.io.IOException
 
 interface RetrofitNetworkApi {
-    @GET("/")
+    @GET("v1/")
     suspend fun getAnimeList(): AnimeListWrapper
-    @GET("/{animeName}")
-    suspend fun getAnimeFacts(name: String): AnimeFactsWrapper
+    @GET("v1/{animeName}")
+    suspend fun getAnimeFacts(@Path("animeName") name: String): AnimeFactsWrapper
 }
 
 class RetrofitNetwork(private val networkApi: RetrofitNetworkApi): NetworkDataSource {
@@ -23,11 +25,11 @@ class RetrofitNetwork(private val networkApi: RetrofitNetworkApi): NetworkDataSo
         }
     }
 
-    override suspend fun getAnimeFacts(name: String): NetworkResult<List<AnimeFact>> {
+    override suspend fun getAnimeFacts(name: String): NetworkResult<AnimeFacts> {
         return safeApiCall {
             val networkResult = networkApi.getAnimeFacts(name)
             if(!networkResult.success) throw Exception()
-            networkResult.animeFacts
+            AnimeFacts(networkResult.animeImageUrl, networkResult.animeFacts)
         }
     }
 

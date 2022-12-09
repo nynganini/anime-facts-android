@@ -15,6 +15,6 @@ data class AnimeListWrapper(
 data class AnimeFactsWrapper(
     @SerialName("success") val success: Boolean,
     @SerialName("total_facts") val totalFacts: Long,
-    @SerialName("anime_img") val animeImageUrl: String,
+    @SerialName("img") val animeImageUrl: String,
     @SerialName("data") val animeFacts: List<AnimeFact>
 )

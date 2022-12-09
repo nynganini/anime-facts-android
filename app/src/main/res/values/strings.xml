@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">AnimeFacts</string>
+    <string name="label_profile">Profile</string>
+
+    <string name="facebook_app_id">1112934002755717</string>
+    <string name="fb_login_protocol_scheme">fb1112934002755717</string>
+    <string name="facebook_client_token">0d811bd393338d1fe0b5cce0a0e39e3b</string>
+
+    <string name="loading_anime_list">Loading anime list…</string>
+    <string name="loading_anime_facts">Loading anime facts…</string>
+    <string name="got_it">OK, got it!</string>
+    <string name="network_error">Network error, please check your internet and try again!</string>
+    <string name="unknown_error">Something went wrong, please try again later.</string>
 </resources>
