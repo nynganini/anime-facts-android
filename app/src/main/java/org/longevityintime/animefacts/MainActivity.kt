@@ -32,31 +32,21 @@ class MainActivity : ComponentActivity() {
 
     lateinit var auth: FirebaseAuth
 
-    private val animeViewModel: AnimeViewModel by viewModels { AnimeViewModel.Factory }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        val anime = Anime(1, "naruto", "blabla")
-        val extras = MutableCreationExtras().apply {
-            set(ANIME_KEY, "naruto")
-        }
-        val animeFactVieModel: AnimeFactVieModel = AnimeFactVieModel.Factory.create(AnimeFactVieModel::class.java, extras)
-        Log.i("longevity", "viewmodel created: ${animeFactVieModel.animeName}")
-
         auth = Firebase.auth
-//        if(auth.currentUser == null){
-//            startActivity(Intent(this, SignInActivity::class.java))
-//            finish()
-//            return
-//        }
+        if(auth.currentUser == null){
+            startActivity(Intent(this, SignInActivity::class.java))
+            finish()
+            return
+        }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {
             AnimeFactsTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -74,14 +64,6 @@ class MainActivity : ComponentActivity() {
             finish()
             return
         }
-    }
-
-    private fun getPhotoUrl(): String? = auth.currentUser?.photoUrl?.toString()
-    private fun getUserName(): String = auth.currentUser?.displayName ?: ANONYMOUS
-
-    private fun signOut(){
-        startActivity(Intent(this, SignInActivity::class.java))
-        finish()
     }
 
     companion object {

@@ -134,15 +134,15 @@ fun AnimeAppBar(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = null
         )
-        IconButton(
-            modifier = Modifier.align(Alignment.CenterVertically),
-            onClick = {  }
-        ) {
-            Icon(
-                imageVector = Icons.Filled.AccountCircle,
-                contentDescription = stringResource(id = R.string.label_profile)
-            )
-        }
+//        IconButton(
+//            modifier = Modifier.align(Alignment.CenterVertically),
+//            onClick = {  }
+//        ) {
+//            Icon(
+//                imageVector = Icons.Filled.AccountCircle,
+//                contentDescription = stringResource(id = R.string.label_profile)
+//            )
+//        }
     }
 }
 

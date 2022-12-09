@@ -29,7 +29,9 @@ fun AnimeNavHost(
         animeGraph { destination ->
             navController.navigate(destination)
         }
-        animeFactGraph()
+        animeFactGraph {
+            navController.popBackStack()
+        }
     }
 }
 
@@ -40,7 +42,7 @@ fun NavGraphBuilder.animeGraph(onAnimeSelected: (String) -> Unit) {
         AnimeListScreen(viewModel = viewModel, onAnimeSelected = onAnimeSelected)
     }
 }
-fun NavGraphBuilder.animeFactGraph() {
+fun NavGraphBuilder.animeFactGraph(onBack: () -> Unit) {
     composable(
         route = Routes.ANIME_FACT,
         arguments = listOf(
@@ -52,6 +54,6 @@ fun NavGraphBuilder.animeFactGraph() {
             set(AnimeFactVieModel.ANIME_KEY, animeName)
         }
         val viewModel = AnimeFactVieModel.Factory.create(AnimeFactVieModel::class.java, extras)
-        AnimeFactsScreen(viewModel = viewModel)
+        AnimeFactsScreen(viewModel = viewModel, onBack = onBack)
     }
 }

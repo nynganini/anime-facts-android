@@ -3,13 +3,15 @@
 package org.longevityintime.animefacts.ui
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -24,7 +26,8 @@ import org.longevityintime.animefacts.viewmodel.AnimeFactVieModel
 
 @Composable
 fun AnimeFactsScreen(
-    viewModel: AnimeFactVieModel
+    viewModel: AnimeFactVieModel,
+    onBack: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     when(uiState){
@@ -48,25 +51,57 @@ fun AnimeFactsScreen(
         }
         is AnimeFactUiState.Success -> {
             val animeFacts = (uiState as AnimeFactUiState.Success).animeFacts
-            AnimeFacts(animeFacts = animeFacts)
+            AnimeFacts(viewModel.animeName, animeFacts = animeFacts, onBack = onBack)
         }
     }
 }
 
 @Composable
 fun AnimeFacts(
+    animeName: String,
     animeFacts: AnimeFacts,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onBack: () -> Unit
 ) {
-    Column(modifier = modifier
-        .verticalScroll(rememberScrollState())
-        .navigationBarsPadding()
-        .statusBarsPadding()) {
-        AnimeHeader(animeFacts.animeImgUrl)
-        animeFacts.facts.forEach { animeFact ->
-            AnimeFactScreen(animeFact = animeFact)
+    val tint = MaterialTheme.colorScheme.onBackground
+    Scaffold(
+        modifier = modifier.statusBarsPadding(),
+        topBar = {
+            Row{
+                IconButton(
+                    onClick = onBack,
+                    Modifier
+                        .padding(start = 10.dp, end = 20.dp)
+                        .align(CenterVertically)
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.ArrowBack,
+                        contentDescription = null,
+                        tint = tint
+                    )
+                }
+                Text(
+                    text = animeName,
+                    modifier = Modifier.align(CenterVertically),
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+        }
+    ) {
+        LazyColumn(modifier = Modifier.padding(it)
+            .navigationBarsPadding()
+            ) {
+            item {
+                AnimeHeader(animeFacts.animeImgUrl)
+            }
+            animeFacts.facts.forEach { animeFact ->
+                item {
+                    AnimeFactScreen(animeFact = animeFact)
+                }
+            }
         }
     }
+
 }
 @Composable
 fun AnimeHeader(
