@@ -3,11 +3,11 @@ package org.longevityintime.animefacts.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.MutableCreationExtras
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import org.longevityintime.animefacts.viewmodel.AnimeFactVieModel
-import org.longevityintime.animefacts.viewmodel.AnimeViewModel
 
 object Routes {
     const val ANIME = "anime"
@@ -36,10 +36,8 @@ fun AnimeNavHost(
 }
 
 fun NavGraphBuilder.animeGraph(onAnimeSelected: (String) -> Unit) {
-    val extras = MutableCreationExtras()
-    val viewModel = AnimeViewModel.Factory.create(AnimeViewModel::class.java, extras)
     composable(route = Routes.ANIME){
-        AnimeListScreen(viewModel = viewModel, onAnimeSelected = onAnimeSelected)
+        AnimeListScreen(onAnimeSelected = onAnimeSelected)
     }
 }
 fun NavGraphBuilder.animeFactGraph(onBack: () -> Unit) {
@@ -53,7 +51,10 @@ fun NavGraphBuilder.animeFactGraph(onBack: () -> Unit) {
         val extras = MutableCreationExtras().apply {
             set(AnimeFactVieModel.ANIME_KEY, animeName)
         }
-        val viewModel = AnimeFactVieModel.Factory.create(AnimeFactVieModel::class.java, extras)
-        AnimeFactsScreen(viewModel = viewModel, onBack = onBack)
+        val animeFactVieModel: AnimeFactVieModel = viewModel(
+            factory = AnimeFactVieModel.Factory,
+            extras = extras
+        )
+        AnimeFactsScreen(animeFactViewModel = animeFactVieModel, onBack = onBack)
     }
 }

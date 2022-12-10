@@ -26,19 +26,19 @@ import org.longevityintime.animefacts.viewmodel.AnimeFactVieModel
 
 @Composable
 fun AnimeFactsScreen(
-    viewModel: AnimeFactVieModel,
+    animeFactViewModel: AnimeFactVieModel,
     onBack: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val uiState by animeFactViewModel.uiState.collectAsStateWithLifecycle()
     when(uiState){
         AnimeFactUiState.GenericError -> {
             ErrorDialog(stringResource(id = R.string.unknown_error)) {
-                viewModel.onCloseErrorDialog()
+                animeFactViewModel.onCloseErrorDialog()
             }
         }
         AnimeFactUiState.NetworkError -> {
             ErrorDialog(stringResource(id = R.string.network_error)) {
-                viewModel.onCloseErrorDialog()
+                animeFactViewModel.onCloseErrorDialog()
             }
         }
         AnimeFactUiState.Loading -> {
@@ -51,7 +51,7 @@ fun AnimeFactsScreen(
         }
         is AnimeFactUiState.Success -> {
             val animeFacts = (uiState as AnimeFactUiState.Success).animeFacts
-            AnimeFacts(viewModel.animeName, animeFacts = animeFacts, onBack = onBack)
+            AnimeFacts(animeFactViewModel.animeName, animeFacts = animeFacts, onBack = onBack)
         }
     }
 }
@@ -88,7 +88,8 @@ fun AnimeFacts(
             }
         }
     ) {
-        LazyColumn(modifier = Modifier.padding(it)
+        LazyColumn(modifier = Modifier
+            .padding(it)
             .navigationBarsPadding()
             ) {
             item {
